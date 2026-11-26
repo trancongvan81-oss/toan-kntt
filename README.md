@@ -34,7 +34,7 @@ không cần đăng nhập, không thu thập dữ liệu.
 
 Repo công khai. Vào **Settings → Pages → Build and deployment → Deploy from
 a branch**, chọn nhánh `main`, thư mục `/ (root)`, rồi **Save**. Liên kết
-trang sẽ có dạng `https://trancongvan81-oss.github.io/moi-ngay-mot-bai-toan-kntt/`,
+trang sẽ có dạng `https://trancongvan81-oss.github.io/toan-kntt/`,
 mỗi bài thêm đường dẫn thư mục của nó, ví dụ:
 
 `https://trancongvan81-oss.github.io/toan-kntt/12/hop/`
