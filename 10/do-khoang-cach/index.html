@@ -1,1 +1,203 @@
-<!doctype html><html lang="vi"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta property="og:type" content="website"><meta property="og:title" content="Bài 04 — Đo khoảng cách mà không cần đến đích"><meta property="og:description" content="Toán 10 KNTT · AB = 60 m, góc A = 60°, góc B = 45°. Kéo thanh trượt, dự đoán AC rồi kiểm tra bằng định lí sin."><meta property="og:url" content="https://trancongvan81-oss.github.io/toan-kntt/10/do-khoang-cach/"><title>Đo khoảng cách không cần đến đích</title><style>*{box-sizing:border-box}body{margin:0;background:#eef4f8;color:#17334b;font:17px/1.6 system-ui,sans-serif}header{background:#123b59;color:white;padding:28px}main{max-width:850px;margin:auto;padding:16px}section{background:white;border-radius:16px;padding:20px;margin:16px 0}h1,h2{line-height:1.2}svg{width:100%;height:auto;background:#f5fafc;border-radius:12px}input[type=range]{width:100%;accent-color:#b65b19}button,input{font:inherit}button{background:#145c79;color:white;border:0;border-radius:8px;padding:10px;cursor:pointer}input[type=number]{max-width:140px}output{font-weight:bold}a{color:#145c79}footer{max-width:850px;margin:0 auto 24px;padding:0 16px;color:#5b7285;font-size:14px}</style><header><small>MỖI NGÀY MỘT BÀI TOÁN · BÀI 04 · TOÁN 10</small><h1>Đo khoảng cách mà không cần đến đích</h1></header><main><section>Hai điểm A, B nằm trên bờ hồ thẳng, AB = 60 m. Điểm C ở phía bên kia hồ. Góc BAC = 60°, góc ABC = 45°. Tính AC, làm tròn đến 0,1 m. Giả định các điểm cùng nằm trên mặt phẳng ngang.</section><section><h2>Thử thay đổi góc ngắm</h2><svg viewBox="0 0 420 300" role="img" aria-label="Sơ đồ tam giác đo khoảng cách" id="fig"></svg><label>Góc BAC: <output id="av">60°</output><input id="a" type="range" min="25" max="75" value="60"></label><label>Góc ABC: <output id="bv">45°</output><input id="b" type="range" min="25" max="75" value="45"></label><button id="reset">Về đề gốc</button><p>Nhập dự đoán AC (m), làm tròn đến 0,1 m: <input id="guess" type="number" min="0" step="0.1"> <button id="check">Kiểm tra</button></p><p id="feedback" aria-live="polite"></p><button id="show">Xem lời giải cho dữ kiện hiện tại</button><div id="solution" hidden></div></section><p><a href="../../">Về thư viện (khi đã đăng web)</a></p></main><footer>Số liệu theo giả thiết của bài toán.</footer><script>const $=id=>document.getElementById(id),rad=x=>x*Math.PI/180,fmt=x=>x.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1});function calc(a,b){return 60*Math.sin(rad(b))/Math.sin(rad(180-a-b))}function draw(){let a=+ $('a').value,b=+ $('b').value,d=calc(a,b),cx=d*Math.cos(rad(a)),cy=d*Math.sin(rad(a)),s=Math.min(4.5,210/cy),ax=210-30*s,bx=210+30*s,x=ax+cx*s,y=250-cy*s;let arc=(px,ang,rev)=>{let r=25,t=rad(ang),ex=px+(rev?-1:1)*r*Math.cos(t),ey=250-r*Math.sin(t);return `<path d="M ${px+(rev?-r:r)} 250 A 25 25 0 0 ${rev?1:0} ${ex} ${ey}" fill="none" stroke="#b65b19" stroke-width="2"/>`};$('fig').innerHTML=`<rect width="420" height="250" fill="#e1f2f5"/><path d="M ${ax} 250 L ${x} ${y} L ${bx} 250 Z" fill="none" stroke="#17334b" stroke-width="2.5"/>${arc(ax,a,false)}${arc(bx,b,true)}<g font-size="14" fill="#17334b" font-weight="bold"><text x="${ax-15}" y="269">A</text><text x="${bx+5}" y="269">B</text><text x="${x}" y="${y-10}" text-anchor="middle">C</text><text x="210" y="282" text-anchor="middle">60 m</text><text x="${ax+35}" y="240">${a}°</text><text x="${bx-35}" y="240" text-anchor="end">${b}°</text></g>`;$('av').textContent=a+'°';$('bv').textContent=b+'°';$('solution').hidden=true;$('feedback').textContent='';$('guess').value=''}function current(){return calc(+$('a').value,+$('b').value)}$('a').oninput=$('b').oninput=draw;$('reset').onclick=()=>{$('a').value=60;$('b').value=45;draw()};$('check').onclick=()=>{$('feedback').textContent=$('guess').value===''?'Hãy nhập dự đoán.':Math.abs(+$('guess').value-Math.round(current()*10)/10)<1e-8?'Chính xác!':'Chưa đúng. Hãy tính góc C rồi dùng định lí sin.'};$('show').onclick=()=>{let a=+$('a').value,b=+$('b').value,c=180-a-b;$('solution').textContent=`Góc C = 180° − ${a}° − ${b}° = ${c}°. Theo định lí sin: AC / sin ${b}° = 60 / sin ${c}°. Vậy AC ≈ ${fmt(current())} m.`;$('solution').hidden=false};draw();</script></html>
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b365c">
+<meta name="description" content="Bài 04 – Toán 10 KNTT: đo khoảng cách qua hồ bằng định lí sin. Khám phá tam giác và góc ngắm qua thí nghiệm tương tác.">
+<meta property="og:title" content="Bài 04 | Đo khoảng cách mà không cần đến đích – Toán 10 KNTT">
+<meta property="og:description" content="Kéo hai góc ngắm, dự đoán khoảng cách AC và khám phá định lí sin bằng một mô phỏng phong cảnh ven hồ.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://trancongvan81-oss.github.io/toan-kntt/10/do-khoang-cach/">
+<title>Bài 04 – Đo khoảng cách mà không cần đến đích | Toán 10 KNTT</title>
+<style>
+:root{color-scheme:light;--ink:#123957;--navy:#103c6a;--muted:#5d758a;--blue:#1475aa;--orange:#ef8629;--line:#dceaf3;--shadow:0 15px 45px rgba(18,58,84,.10)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.58;background:radial-gradient(circle at 6% 9%,#d9efff 0,transparent 33%),radial-gradient(circle at 88% 27%,#e3f5ec 0,transparent 32%),#f5f9fd;overflow-wrap:anywhere}
+button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #f59e0b;outline-offset:3px}button:disabled{cursor:not-allowed;opacity:.5}
+.page{max-width:1180px;padding:0 22px;margin:auto}.hero{background:linear-gradient(110deg,#092b50 0%,#15588a 65%,#288baf 100%);color:white;position:relative;overflow:hidden}.hero:before{content:"";position:absolute;right:-45px;top:-132px;width:340px;height:340px;border:55px solid rgba(255,255,255,.065);border-radius:50%}.hero:after{content:"";position:absolute;left:65%;bottom:-110px;width:280px;height:280px;background:rgba(255,255,255,.04);border-radius:50%}.hero-inner{padding:29px 0 35px;position:relative;z-index:1}.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);padding:7px 13px;border:1px solid rgba(255,255,255,.27);border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.05em}h1{font-size:clamp(27px,4.8vw,47px);line-height:1.15;margin:17px 0 11px;max-width:890px;letter-spacing:-.025em}.lead{font-size:15px;max-width:830px;color:#e1f2fc;margin:0}.tags{margin-top:17px;display:flex;flex-wrap:wrap;gap:8px}.tag{padding:5px 10px;background:#ffffff1f;border:1px solid #ffffff36;border-radius:999px;font-size:12px;font-weight:650}
+main{padding-top:22px;padding-bottom:50px}.intro{background:white;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:20px;padding:18px 22px;margin-bottom:20px;display:grid;grid-template-columns:auto 1fr;align-items:start;gap:14px}.intro .emoji{font-size:28px;line-height:1.2}.intro h2{margin:0 0 5px;font-size:18px}.intro p{margin:0;font-size:15px}.intro strong{color:#0e588a}
+.explorer{border-radius:24px;overflow:hidden;border:1px solid #c7dfea;background:white;box-shadow:var(--shadow)}.scene-top{display:flex;justify-content:space-between;gap:12px;align-items:center;background:#f7fbff;padding:13px 17px}.scene-top h2{margin:0;font-size:17px}.scene-pill{background:#e1f4ed;color:#176954;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:800;white-space:nowrap}.landscape{background:linear-gradient(#dbf1ff,#f2fbff);position:relative}.landscape svg{width:100%;height:auto;display:block;overflow:visible}.scene-caption{padding:10px 18px;background:#f8fcff;border-top:1px solid #deebf4;font-size:12px;color:#59778d;text-align:center}.grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:18px;margin-top:20px}.panel{background:white;border:1px solid var(--line);border-radius:20px;padding:21px;box-shadow:var(--shadow);min-width:0}.panel h2{font-size:18px;line-height:1.3;margin:0 0 4px}.panel .sub{color:var(--muted);font-size:13px;margin:0 0 19px}.field{margin-bottom:16px}.field-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.field label{font-size:14px;font-weight:800;color:#244b69}.value{background:#e8f3fc;border:1px solid #b8d9ef;color:#145d96;border-radius:11px;font-weight:900;font-variant-numeric:tabular-nums;padding:3px 10px;min-width:60px;text-align:center}.range{appearance:none;-webkit-appearance:none;width:100%;height:12px;background:linear-gradient(90deg,#bce2fa,#3b94cb);border-radius:999px;margin:17px 0 8px}.range::-webkit-slider-thumb{appearance:none;width:25px;height:25px;background:#fff;border:5px solid #1475aa;border-radius:50%;box-shadow:0 2px 7px #0002}.range::-moz-range-thumb{width:18px;height:18px;background:#fff;border:5px solid #1475aa;border-radius:50%;box-shadow:0 2px 7px #0002}.range-ends{display:flex;justify-content:space-between;font-size:12px;color:#6a8296}.mini-note{font-size:13px;background:#fff8ec;border:1px solid #ffe3b7;padding:10px 13px;border-radius:12px;color:#6b512b;margin:7px 0 17px}.btn-row{display:flex;gap:9px;flex-wrap:wrap}.btn{background:#17649a;color:white;border:1px solid #17649a;border-radius:12px;font-size:14px;font-weight:800;padding:10px 13px;transition:background .15s ease,transform .15s ease}.btn:hover{background:#0f4b78}.btn:active{transform:translateY(1px)}.btn.secondary{background:#fff;color:#17649a;border-color:#a8cce2}.btn.secondary:hover{background:#ebf6ff}.btn.warm{background:linear-gradient(115deg,#f09238,#e6731c);border-color:#d46a1a}.btn.warm:hover{background:#d66b19}
+.qbox{background:#eef8fd;border-radius:16px;padding:15px;border:1px solid #cae7f3;margin-top:15px}.qbox label{font-weight:800;display:block;margin:0 0 8px;font-size:14px}.guess-row{display:flex;gap:8px}.guess-row input{min-width:0;flex:1;border-radius:10px;border:1px solid #a9cadb;background:white;color:var(--ink);padding:10px 12px;font-size:16px}.guess-row button{flex:0 0 auto}.feedback{font-weight:700;font-size:13px;margin:9px 0 0;min-height:20px}.feedback.good{color:#157150}.feedback.try{color:#9c521e}
+.steps{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.steps span{font-size:12px;padding:5px 9px;background:#f0f5f9;border-radius:9px;color:#627f91}.divider{height:1px;background:#e3edf4;margin:18px 0}.preview-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.fact{background:#f5f9fd;border:1px solid #e1edf5;padding:12px;border-radius:13px}.fact b{display:block;font-size:18px;color:#125787;font-variant-numeric:tabular-nums}.fact small{color:#627a8d;font-size:11px}.solution{border:1px solid #b7dccb;background:#f3fbf5;border-radius:15px;padding:17px;margin-top:16px}.solution[hidden]{display:none}.solution h3{margin:0 0 6px;font-size:17px;color:#135844}.solution p{margin:8px 0;font-size:14px}.formula{font-weight:800;color:#115879;background:white;border-radius:10px;padding:8px 10px;text-align:center;font-size:clamp(15px,2vw,20px)}.solution .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.solution .two div{background:white;padding:11px;border-radius:12px}.solution .two small{display:block;color:#6b8190}.solution .two strong{font-size:20px;color:#0d654c}.caption{font-size:12px;color:#6d8294;margin:12px 0 0}.qa{background:linear-gradient(125deg,#f0f8f3,#f8fbff);border:1px solid #d0e9dd;border-radius:20px;padding:20px 22px;margin-top:20px}.qa h2{font-size:18px;margin:0 0 6px}.qa p{margin:0;font-size:14px}.footer{color:#657e91;font-size:12px;text-align:center;margin-top:23px}.footer a{color:#14608f}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:760px){.page{padding:0 12px}.hero-inner{padding:25px 0 29px}.grid{grid-template-columns:1fr}.panel{padding:17px}.intro{padding:16px}.scene-top{padding:12px}.scene-top h2{font-size:15px}.scene-pill{font-size:11px}.guess-row{flex-wrap:wrap}.guess-row input{min-width:160px}.guess-row button{flex:1}.scene-caption{text-align:left}.landscape svg{min-width:0}}@media(max-width:390px){.scene-pill{display:none}.solution .two{grid-template-columns:1fr}.value{min-width:50px}.btn{font-size:13px;padding:9px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="page hero-inner">
+ <div class="eyebrow">📚 MỖI NGÀY MỘT BÀI TOÁN · BÀI 04</div>
+ <h1>🌊 Đo khoảng cách mà không cần đến đích</h1>
+ <p class="lead">Bạn có thể đo khoảng cách đến một gốc cây bên kia hồ chỉ bằng một đoạn thẳng và hai góc ngắm? Hãy tự điều chỉnh các góc để khám phá!</p>
+ <div class="tags"><span class="tag">Toán 10 · Kết nối tri thức</span><span class="tag">Hệ thức lượng trong tam giác</span><span class="tag">Thí nghiệm tương tác</span></div>
+</div></header>
+<main class="page">
+ <section class="intro" aria-labelledby="prob-title"><div class="emoji">📐</div><div><h2 id="prob-title">Bài toán</h2><p>Hai điểm <strong>A, B</strong> nằm trên một bờ hồ thẳng, cách nhau <strong>60 m</strong>. Điểm <strong>C</strong> là gốc cây ở phía bên kia hồ. Biết <strong>góc BAC = 60°</strong>, <strong>góc ABC = 45°</strong>. Coi ba điểm cùng nằm trên một mặt phẳng ngang. <strong>Hãy tính AC</strong> (làm tròn đến 0,1 m).</p></div></section>
+ <section class="explorer" aria-labelledby="explore-title">
+  <div class="scene-top"><h2 id="explore-title">🎨 Thử đo bằng tam giác</h2><span class="scene-pill">Các góc được dựng theo đúng số đo</span></div>
+  <div class="landscape">
+   <svg id="lakeScene" viewBox="0 0 960 565" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="sceneTitle sceneDesc">
+    <title id="sceneTitle">Thí nghiệm đo khoảng cách qua hồ bằng hai góc ngắm</title>
+    <desc id="sceneDesc">Bờ hồ phía gần có A và B cách nhau 60 mét, cây ở C bên bờ bên kia. Góc tại A và B thay đổi theo thanh trượt; cạnh AC và BC được dựng lại theo hình học chính xác.</desc>
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#85d5ff"/><stop offset=".55" stop-color="#d5f2ff"/><stop offset="1" stop-color="#eff9ef"/></linearGradient>
+      <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67c9e6"/><stop offset=".52" stop-color="#a2e2f3"/><stop offset="1" stop-color="#d7f6f8"/></linearGradient>
+      <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe97c"/><stop offset="1" stop-color="#71b556"/></linearGradient>
+      <linearGradient id="leaf" x1="0" y1="0" x2=".9" y2="1"><stop offset="0" stop-color="#d0ed60"/><stop offset=".55" stop-color="#6fbd43"/><stop offset="1" stop-color="#2e7e47"/></linearGradient>
+      <linearGradient id="trunk" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#925220"/><stop offset=".5" stop-color="#d99b51"/><stop offset="1" stop-color="#784019"/></linearGradient>
+      <filter id="shadow" x="-60%" width="220%" y="-60%" height="220%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#092941" flood-opacity=".23"/></filter>
+      <filter id="softGlow" x="-60%" width="220%" y="-60%" height="220%"><feGaussianBlur stdDeviation="14"/></filter>
+    </defs>
+    <!-- Scene layers are decorative; the interactive triangle is generated from measured angles. -->
+    <rect width="960" height="565" fill="url(#sky)"/>
+    <circle cx="770" cy="78" r="66" fill="#fff4ba" opacity=".26" filter="url(#softGlow)"/>
+    <g fill="#fff" opacity=".78">
+      <ellipse cx="130" cy="86" rx="72" ry="16"/><ellipse cx="99" cy="78" rx="30" ry="21"/><ellipse cx="160" cy="76" rx="37" ry="23"/>
+      <ellipse cx="775" cy="73" rx="66" ry="15"/><ellipse cx="749" cy="62" rx="29" ry="21"/><ellipse cx="810" cy="61" rx="35" ry="23"/>
+      <ellipse cx="528" cy="51" rx="46" ry="10"/>
+    </g>
+    <path d="M0 208 Q105 137 209 191 Q302 125 417 196 Q543 104 673 190 Q808 129 960 203 L960 261 L0 261Z" fill="#95c9d9" opacity=".95"/>
+    <path d="M0 229 Q100 175 203 221 Q346 150 473 223 Q625 150 766 217 Q861 167 960 221 V288 H0Z" fill="#69a7b5" opacity=".65"/>
+    <path d="M0 230 Q140 191 280 233 Q447 186 618 225 Q800 185 960 226 L960 262 L0 262Z" fill="#86c65f"/>
+    <path d="M0 243 Q150 227 281 247 Q475 226 619 247 Q818 228 960 242 L960 269 L0 269Z" fill="#d5df82"/>
+    <rect y="254" width="960" height="224" fill="url(#lake)"/>
+    <g fill="none" stroke="#fff" stroke-linecap="round" opacity=".44">
+      <path d="M28 308 q32 -6 66 0 m70 10 q35 -7 78 0 m470 -9 q32 -6 65 0 m65 12 q29 -5 66 0" stroke-width="3"/>
+      <path d="M90 371 q57 -8 104 0 m65 19 q42 -6 90 0 m190 -22 q39 -8 103 0 m78 20 q34 -8 82 0" stroke-width="3"/>
+      <path d="M24 438 q33 -7 93 0 m115 10 q51 -8 103 0 m310 -13 q61 -8 119 0 m95 16 q31 -6 68 0" stroke-width="4"/>
+    </g>
+    <!-- Moving peninsula gives the distant tree a grounded shoreline even when geometry changes. -->
+    <g id="peninsula"><path id="peninsulaPatch" fill="#a2d474" stroke="#73a64d" stroke-width="2"/><path id="peninsulaTrim" fill="#dcdd87" opacity=".8"/></g>
+    <path d="M0 464 Q130 460 233 467 Q404 457 565 469 Q773 456 960 467 L960 565 H0Z" fill="url(#grass)"/>
+    <path d="M0 464 Q137 461 235 468 Q422 458 569 468 Q755 461 960 469" fill="none" stroke="#d6f6a1" stroke-width="9" opacity=".85"/>
+    <g fill="none" stroke-linecap="round" stroke-width="4" opacity=".8"><path d="M55 515 l-12 -20 m12 20 l10 -27 m-10 27 l24 -14" stroke="#3b9e65"/><path d="M875 515 l-14 -25 m14 25 l7 -34 m-7 34 l23 -15" stroke="#46955e"/><path d="M821 499 l-9 -21 m9 21 l18 -26 m-18 26 l23 -9" stroke="#449759"/></g>
+    <g fill="#649d68" opacity=".7"><ellipse cx="83" cy="491" rx="25" ry="6"/><ellipse cx="876" cy="484" rx="32" ry="6"/><ellipse cx="763" cy="530" rx="10" ry="4"/></g>
+    <g id="tree" transform="translate(425 216)" aria-hidden="true">
+      <ellipse cx="0" cy="3" rx="41" ry="9" fill="#3c8844" opacity=".34"/>
+      <path d="M-8 2 Q-10 -18 -5 -47 L-35 -70 L-31 -76 L-1 -57 Q6 -71 14 -85 L20 -79 Q10 -61 11 -44 Q9 -11 8 2Z" fill="url(#trunk)" stroke="#87502b" stroke-width="2"/>
+      <path d="M2 -19 Q12 -50 31 -70 L35 -65 Q13 -41 11 -15" stroke="#8c592b" stroke-width="6" fill="none"/>
+      <g fill="url(#leaf)" stroke="#5d9a45" stroke-width="1.5">
+        <ellipse cx="-47" cy="-95" rx="44" ry="34"/><ellipse cx="-9" cy="-119" rx="43" ry="37"/><ellipse cx="34" cy="-98" rx="48" ry="40"/><ellipse cx="-21" cy="-75" rx="48" ry="35"/><ellipse cx="21" cy="-74" rx="45" ry="32"/>
+      </g>
+      <g fill="#cfeb79" opacity=".8"><ellipse cx="-53" cy="-107" rx="16" ry="9"/><ellipse cx="-16" cy="-131" rx="19" ry="10"/><ellipse cx="34" cy="-109" rx="18" ry="11"/><ellipse cx="-10" cy="-90" rx="18" ry="9"/></g>
+      <g fill="#2f8d48" opacity=".35"><ellipse cx="43" cy="-77" rx="22" ry="10"/><ellipse cx="-34" cy="-70" rx="22" ry="9"/></g>
+    </g>
+    <!-- Triangle overlay; path, dots and labels update for each pair of angles -->
+    <path id="triFill" fill="#ffffff" fill-opacity=".035" stroke="none"/>
+    <path id="triLines" stroke="#103b70" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" fill="none" filter="url(#shadow)"/>
+    <path id="arcA" fill="#fce18c" fill-opacity=".55" stroke="#e27725" stroke-width="4"/>
+    <path id="arcB" fill="#fce18c" fill-opacity=".55" stroke="#e27725" stroke-width="4"/>
+    <g id="dots" fill="#0c3970" stroke="#fff" stroke-width="3.5"><circle id="dotA" r="10"/><circle id="dotB" r="10"/><circle id="dotC" r="10"/></g>
+    <g font-family="system-ui,-apple-system,Segoe UI,Arial,sans-serif" font-weight="900" fill="#102f62" paint-order="stroke" stroke="#faffff" stroke-width="6" stroke-linejoin="round">
+      <text id="labelA" font-size="30" text-anchor="middle">A</text><text id="labelB" font-size="30" text-anchor="middle">B</text><text id="labelC" font-size="30" text-anchor="middle">C</text>
+      <text id="angleALabel" fill="#c65e16" font-size="23" stroke-width="5">60°</text><text id="angleBLabel" fill="#c65e16" font-size="23" stroke-width="5" text-anchor="end">45°</text>
+    </g>
+    <rect id="distanceBg" width="134" height="39" rx="19.5" fill="#f9fcff" stroke="#bed9e7" stroke-width="2" filter="url(#shadow)"/>
+    <text id="distanceLabel" font-size="23" font-weight="900" text-anchor="middle" fill="#103b70" dominant-baseline="middle">AB = 60 m</text>
+    <g id="heightGuide" display="none" stroke="#247f6e" stroke-width="3" stroke-dasharray="9 7" fill="none"><path id="heightPath"/><circle id="dotH" r="6" fill="#2c8d73" stroke="white" stroke-width="2"/><text id="labelH" fill="#216e61" stroke="white" paint-order="stroke" stroke-width="4" font-size="20" font-weight="800">H</text></g>
+   </svg>
+  </div>
+  <div class="scene-caption">Phong cảnh minh họa; các đoạn thẳng và góc trong tam giác được dựng theo dữ kiện. Tỉ lệ hiển thị tự điều chỉnh để hình vừa khung.</div>
+ </section>
+ <div class="grid">
+  <section class="panel" aria-labelledby="controls-title">
+   <h2 id="controls-title">🎚️ 1. Thay đổi góc ngắm</h2><p class="sub">Kéo thanh trượt rồi quan sát hình tam giác thay đổi. AB luôn bằng 60 m.</p>
+   <div class="field"><div class="field-head"><label for="angleA">Góc BAC</label><output class="value" for="angleA" id="outA">60°</output></div><input class="range" id="angleA" type="range" min="25" max="75" step="1" value="60"><div class="range-ends"><span>25°</span><span>75°</span></div></div>
+   <div class="field"><div class="field-head"><label for="angleB">Góc ABC</label><output class="value" for="angleB" id="outB">45°</output></div><input class="range" id="angleB" type="range" min="25" max="75" step="1" value="45"><div class="range-ends"><span>25°</span><span>75°</span></div></div>
+   <p class="mini-note">💡 Hai góc ngắm xác định vị trí C. Khi thay đổi góc, cả cây và các cạnh tam giác sẽ di chuyển theo mô hình hình học.</p>
+   <div class="btn-row"><button class="btn secondary" id="btnReset" type="button">↻ Trở về đề gốc</button><button class="btn secondary" id="btnHint" type="button">Gợi ý</button></div>
+   <p id="hint" class="caption" hidden>Gợi ý: Tính góc C trước. Sau đó dùng định lí sin, ghép cạnh AC với góc B đối diện và cạnh AB với góc C đối diện.</p>
+   <div class="steps"><span>1 · Quan sát</span><span>2 · Dự đoán</span><span>3 · Kiểm tra</span><span>4 · Giải thích</span></div>
+  </section>
+  <section class="panel" aria-labelledby="answer-title">
+   <h2 id="answer-title">🎯 2. Bạn dự đoán được không?</h2><p class="sub">Chưa có đáp án? Hãy thử trước khi xem lời giải.</p>
+   <div class="preview-facts"><div class="fact"><small>Khoảng cách đã biết</small><b>AB = 60 m</b></div><div class="fact"><small>Cần tìm</small><b>AC = ? m</b></div></div>
+   <div class="qbox"><label for="guess">Dự đoán AC (m), làm tròn đến 0,1 m</label><div class="guess-row"><input id="guess" type="text" inputmode="decimal" autocomplete="off" placeholder="VD: 42,5" aria-describedby="feedback"><button id="btnCheck" class="btn" type="button">Kiểm tra</button></div><p id="feedback" class="feedback" role="status" aria-live="polite"></p></div>
+   <div class="divider"></div><button class="btn warm" id="btnSolution" type="button" aria-expanded="false" aria-controls="solution">📖 Xem lời giải chi tiết</button>
+   <div id="solution" class="solution" hidden>
+    <h3>Định lí sin – Cách tính từ góc ngắm</h3>
+    <p id="angleStep"></p>
+    <p>Theo định lí sin trong tam giác ABC:</p>
+    <div class="formula">AC / sin B = AB / sin C</div>
+    <p id="substitution"></p>
+    <div class="formula" id="resultEquation"></div>
+    <p>Để phân biệt khoảng cách từ A đến cây với khoảng cách vuông góc tới bờ, kẻ CH vuông góc AB (H nằm giữa A và B).</p>
+    <div class="two"><div><small>Khoảng cách AC</small><strong id="resultAC"></strong></div><div><small>Khoảng cách CH</small><strong id="resultCH"></strong></div></div>
+    <p class="caption">Số liệu và hình sẽ được tính lại theo góc ngắm hiện tại. Khoảng cách CH khác AC.</p>
+   </div>
+  </section>
+ </div>
+ <section class="qa"><h2>🌱 Điều ẩn sau thí nghiệm</h2><p>Khi không thể đo trực tiếp một khoảng cách, ta có thể đo một đoạn chuẩn và hai góc để xác định vị trí điểm còn lại. Đây là một ví dụ của <strong>mô hình hóa và đo đạc gián tiếp</strong>. Trong thực tế, phép đo góc có sai số, nên kết quả tính toán luôn phụ thuộc độ chính xác của dữ liệu đầu vào.</p></section>
+ <p class="footer">Bài 04 · Toán 10 KNTT · <a href="../../">← Trở về thư viện bài toán</a> · Trang HTML độc lập, không thu thập dữ liệu, không cần thư viện ngoài. Số liệu theo giả thiết của bài toán.</p>
+</main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const deg=x=>x*Math.PI/180;
+const fmt=x=>x.toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:1});
+const BASE=60, Y=470;
+function model(a,b){
+ const c=180-a-b;
+ const ac=BASE*Math.sin(deg(b))/Math.sin(deg(c));
+ const bc=BASE*Math.sin(deg(a))/Math.sin(deg(c));
+ const h=ac*Math.sin(deg(a));
+ const scale=Math.min(9.3,245/h);
+ const ax=480-BASE*scale/2,bx=480+BASE*scale/2;
+ const cx=ax+ac*Math.cos(deg(a))*scale,cy=Y-h*scale;
+ return {a,b,c,ac,bc,h,ax,bx,cx,cy,scale};
+}
+function setAttr(id,values){const el=$(id);for(const [key,value] of Object.entries(values))el.setAttribute(key,String(value));}
+function drawArc(x,y,theta,r,fromB){
+ const endX=x+(fromB?-1:1)*r*Math.cos(deg(theta));
+ const endY=y-r*Math.sin(deg(theta));
+ const startX=x+(fromB?-r:r);
+ return `M ${x} ${y} L ${startX} ${y} A ${r} ${r} 0 0 ${fromB?1:0} ${endX} ${endY} Z`;
+}
+function position(m){
+ setAttr('tree',{transform:`translate(${m.cx} ${m.cy})`});
+ const x=m.cx,y=m.cy;
+ // The slender tongue of land visually connects the variable tree location to the opposite bank.
+ setAttr('peninsulaPatch',{d:`M ${x-105} 246 Q ${x-50} 242 ${x-29} ${y+8} Q ${x} ${y+16} ${x+29} ${y+8} Q ${x+54} 240 ${x+107} 246 Z`});
+ setAttr('peninsulaTrim',{d:`M ${x-30} ${y+7} Q ${x} ${y+14} ${x+30} ${y+7} L ${x+23} ${y+15} Q ${x} ${y+22} ${x-23} ${y+15} Z`});
+ setAttr('triFill',{d:`M ${m.ax} ${Y} L ${x} ${y} L ${m.bx} ${Y} Z`});
+ setAttr('triLines',{d:`M ${m.ax} ${Y} L ${x} ${y} L ${m.bx} ${Y} Z`});
+ setAttr('dotA',{cx:m.ax,cy:Y});setAttr('dotB',{cx:m.bx,cy:Y});setAttr('dotC',{cx:x,cy:y});
+ setAttr('labelA',{x:m.ax-34,y:Y+48});setAttr('labelB',{x:m.bx+34,y:Y+48});setAttr('labelC',{x:x+20,y:y-15});
+ const narrow=(m.bx-m.ax)<235;const arcRadius=narrow?Math.max(24,(m.bx-m.ax)*.19):43;
+ setAttr('arcA',{d:drawArc(m.ax,Y,m.a,arcRadius,false)});
+ setAttr('arcB',{d:drawArc(m.bx,Y,m.b,arcRadius,true)});
+ setAttr('angleALabel',{x:narrow?m.ax-14:m.ax+57,y:narrow?Y-28:Y-25,'text-anchor':narrow?'end':'start'});$('angleALabel').textContent=m.a+'°';
+ setAttr('angleBLabel',{x:narrow?m.bx+14:m.bx-57,y:narrow?Y-28:Y-25,'text-anchor':narrow?'start':'end'});$('angleBLabel').textContent=m.b+'°';
+ setAttr('distanceBg',{x:413,y:493});setAttr('distanceLabel',{x:480,y:513});
+ const hx=x;setAttr('heightPath',{d:`M ${hx} ${y} L ${hx} ${Y}`});
+ setAttr('dotH',{cx:hx,cy:Y});setAttr('labelH',{x:hx+9,y:Y-13});
+ $('outA').textContent=m.a+'°';$('outB').textContent=m.b+'°';
+}
+function current(){return model(Number($('angleA').value),Number($('angleB').value));}
+function update(){position(current());$('solution').hidden=true;$('btnSolution').setAttribute('aria-expanded','false');$('btnSolution').textContent='📖 Xem lời giải chi tiết';$('heightGuide').setAttribute('display','none');$('guess').value='';$('feedback').textContent='';$('feedback').className='feedback';$('hint').hidden=true;}
+function check(){
+ const raw=$('guess').value.trim().replace(',','.');const val=Number(raw);
+ const f=$('feedback');f.className='feedback';
+ if(raw===''||!Number.isFinite(val)||val<0){f.textContent='Hãy nhập một khoảng cách hợp lệ, ví dụ 42,5.';f.classList.add('try');return;}
+ const result=Math.round(current().ac*10)/10;
+ if(Math.abs(val-result)<0.0000001){f.textContent='🎉 Chính xác! Bạn đã tìm đúng khoảng cách AC.';f.classList.add('good');}
+ else{f.textContent='Chưa chính xác. Hãy tìm góc C, sau đó vận dụng định lí sin.';f.classList.add('try');}
+}
+function showSolution(){
+ const el=$('solution');if(!el.hidden){el.hidden=true;$('heightGuide').setAttribute('display','none');$('btnSolution').setAttribute('aria-expanded','false');$('btnSolution').textContent='📖 Xem lời giải chi tiết';return;}
+ const m=current();
+ $('angleStep').textContent=`Góc C = 180° − ${m.a}° − ${m.b}° = ${m.c}°.`;
+ $('substitution').textContent=`Thay AB = 60 m, B = ${m.b}° và C = ${m.c}° vào công thức:`;
+ $('resultEquation').textContent=`AC = 60 × sin ${m.b}° / sin ${m.c}° ≈ ${fmt(m.ac)} m`;
+ $('resultAC').textContent=fmt(m.ac)+' m';$('resultCH').textContent=fmt(m.h)+' m';
+ $('heightGuide').setAttribute('display','inline');el.hidden=false;$('btnSolution').setAttribute('aria-expanded','true');$('btnSolution').textContent='🙈 Ẩn lời giải';
+}
+$('angleA').addEventListener('input',update);$('angleB').addEventListener('input',update);
+$('btnReset').addEventListener('click',()=>{$('angleA').value=60;$('angleB').value=45;update();});
+$('btnHint').addEventListener('click',()=>{$('hint').hidden=!$('hint').hidden;});
+$('btnCheck').addEventListener('click',check);
+$('guess').addEventListener('keydown',e=>{if(e.key==='Enter')check();});
+$('btnSolution').addEventListener('click',showSolution);
+update();
+</script>
+</body>
+</html>
