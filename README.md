@@ -11,7 +11,11 @@ Trang chủ: https://trancongvan81-oss.github.io/toan-kntt/
 
 ```
 index.html                        Trang chủ: đủ cả 3 khối 10 / 11 / 12
-10/                               Thí nghiệm Toán 10 (đang cập nhật)
+10/                               Thí nghiệm Toán 10
+  do-khoang-cach/
+    index.html                    Bài 04 — Đo khoảng cách mà không cần đến đích (Toán 10)
+                                  AB = 60 m, góc A = 60°, góc B = 45°, AC ≈ 43,9 m.
+                                  Định lí sin. Đo khoảng cách gián tiếp.
 11/                               Thí nghiệm Toán 11 (đang cập nhật)
 12/
   hop/
