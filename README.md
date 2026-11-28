@@ -17,10 +17,12 @@ index.html                        Trang chủ: đủ cả 3 khối 10 / 11 / 12
                                   AB = 60 m, góc A = 60°, góc B = 45°, AC ≈ 43,9 m.
                                   Định lí sin. Đo khoảng cách gián tiếp.
 11/                               Thí nghiệm Toán 11
-  can-cau-quay/
+  can-cau/
     index.html                    Bài 05 — Cần cẩu quay, điều gì không đổi? (Toán 11)
                                   Cần AB = 12 m, nằm ngang ở độ cao 8 m.
                                   AB ∥ (P) ở mọi hướng quay; hạ xuống 0 m thì AB ⊂ (P).
+                                  Ảnh thật cần cẩu nhúng trong trang + anh-can-cau.jpg (ảnh bìa).
+    anh-can-cau.jpg               Ảnh bìa cần cẩu (1200×630, dùng cho xem trước khi chia sẻ)
 12/
   hop/
     index.html                    Bài 03 — Chiếc hộp không nắp (Toán 12)
